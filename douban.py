@@ -37,6 +37,13 @@ def get(url, filename):
     """
     缓存, 避免重复下载网页浪费时间
     """
+    # 添加请求头部
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+                      'AppleWebKit/537.36 (KHTML, like Gecko) '
+                      'Chrome/70.0.3538.110 '
+                      'Safari/537.36',
+    }
     folder = 'cached'
     # 建立 cached 文件夹
     if not os.path.exists(folder):
@@ -49,7 +56,7 @@ def get(url, filename):
             return s
     else:
         # 发送网络请求, 把结果写入到文件夹中
-        r = requests.get(url)
+        r = requests.get(url, headers=headers)
         with open(path, 'wb') as f:
             f.write(r.content)
             return r.content
